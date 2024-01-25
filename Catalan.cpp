@@ -1,23 +1,23 @@
 #include <iostream>
 using namespace std;
 
-int factorial(int f) {
-    if(f <= 0) 
+ int Catalan(int n){
+    int total = 0;
+    if(n <= 1) 
     {
         return 1;
     }
     else 
     {
-        return f * factorial(f - 1);
+    for(int i = 0; i < n; i++) {
+        total += Catalan(n) * Catalan(n - i);
     }
-}
-
-int Catalan(int n) {
-    return (factorial(2 * n)) / (factorial(n + 1) * factorial(n));
-}
-
-int main() {
+    }
  
-    cout << Catalan(4);
-    return 0;
+    return total;
 }
+
+int main(){
+    cout << Catalan(10) << endl;
+    return 0;
+};
