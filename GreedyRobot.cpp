@@ -18,6 +18,7 @@ static vector<string> possible_routes_;
 //When do i use the equaiton?
 
 
+
 GreedyRobot::GreedyRobot() {
     max_distance_ = 0;
     robot_x_ = 0;
@@ -36,6 +37,33 @@ GreedyRobot::GreedyRobot(int dis, int rX, int rY, int tX, int tY) {
     treasure_x_ = tX;
     treasure_y_ = tY;
     
+}
+
+bool GreedyRobot::CheckLocations(int rX, int rY, int tX, int tY) {
+    if(rX == tX && tX == tY) 
+    {
+        return true;
+    }
+    else 
+    {
+        return false;
+    }   
+
+}
+
+
+int GreedyRobot::CreatePath(int rX, int rY, string& cur_path ) {
+
+    //base case
+    if(CheckLocations(rX, rY, treasure_x_, treasure_y_)) 
+    {
+        possible_routes_.push_back(cur_path);
+        return 1;
+    }
+
+
+    //Create NEWS functions and 
+
 }
 
 
