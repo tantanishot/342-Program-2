@@ -1,0 +1,35 @@
+TEST 1: (Max Distance: 2, Possible Paths: 7 (Normal))
+NNENE
+NNEEN
+NENNE
+NENEN
+NEENN
+ENNEN
+ENENN
+Number of paths: 7
+TEST 2: (Max Distance 2: Possible Paths: 0 (Already at Pos)
+There are no possible routes
+TEST 3 (Max Distance: 1, Possible Paths: 0 (Unreachable))
+There are no possible routes
+TEST 4 (Max Distance: , Possible Paths: 1 (Straight Line Right)
+EEEE
+Number of paths: 1
+TEST 5 (Max Distance: 1, Possible Paths: 0 (Straight Line Down)
+SS
+Number of paths: 1
+TEST 6 (Max Distance: 1, Possible Paths: 0 (Diagonal)
+EEEE
+Number of paths: 1
+TEST 7 (Max Distance: 2, Possible Paths: 3 (Normal SE)SSE
+SES
+ESS
+Number of paths: 3
+TEST 8 (Max Distance: 0, Possible Paths: 0 (Not Valid Args)
+Int Arguments must be 5 integers exact
+TEST 9(Max Distance: 0, Possible Paths: 0 (Not Valid Args)
+Int Arguments must be 5 integers exact
+echo "TEST 10 (Max Distance: 0, Possible Paths: 0 (All negative))"
+SSWSWW
+Number of paths: 1
+
+

@@ -13,7 +13,6 @@ class GreedyRobot {
         int robot_y_;
         int treasure_x_;
         int treasure_y_;
-        string path_names_;
         int maxN_, maxE_, maxW_, maxS_;
         vector <string> possible_routes_;
 

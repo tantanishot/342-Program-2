@@ -1,4 +1,4 @@
-#include <iostream>
+    #include <iostream>
 #include "GreedyRobot.h"
 #include <vector>
 using namespace std;
@@ -11,15 +11,6 @@ using namespace std;
 //4. Once location is met, append string to possible routes and reset 
 //5. Once all possible locations are met, print length of array and all possible routes
 
-
-//Pitfalls/lost and questions: 
-//How will it know that this combination path has already been went through? 
-//In my code you have: base case ==, you can go NEWS          
-//How to restart after meeting to the treasure after the first iteration.
-//How to implement max distance for each move(do i use a counter and if its zero i can only move once now)(CHECK)
-
-
-
 GreedyRobot::GreedyRobot() {
     max_distance_ = 0;
     robot_x_ = 0;
@@ -31,6 +22,7 @@ GreedyRobot::GreedyRobot() {
      maxW_ = max_distance_;
       maxE_ = max_distance_;
        maxN_ = max_distance_;
+
     
 
 }
@@ -48,6 +40,8 @@ GreedyRobot::GreedyRobot(int dis, int rX, int rY, int tX, int tY) {
      maxW_ = max_distance_;
       maxE_ = max_distance_;
        maxN_ = max_distance_;
+           //Debug print and check all values
+    //cout << "Robot" << robot_x_ << robot_y_ << endl << "Treasure" << treasure_x_ << treasure_y_;
     
 }
 
@@ -68,15 +62,17 @@ GreedyRobot::GreedyRobot(int dis, int rX, int rY, int tX, int tY) {
     
 
 bool GreedyRobot::CheckLocations(int rX, int rY, int tX, int tY) {
-    if(rX == tX && rY == tY) 
+    //cout << "Robot: (" << rX << ", " << rY << "), Treasure: (" << tX << ", " << tY << ") ";
+    //cout << "Treasure_x_: " << treasure_x_ << ", Treasure_y_: " << treasure_y_ << endl;  // Debug print
+    if (rX == tX && rY == tY) 
     {
+        //cout << "true" << endl;
         return true;
-    }
-    else 
+    } else 
     {
+        //cout << "false" << endl;
         return false;
-    }   
-
+    }
 }
 
  ostream& operator<<(ostream& out, GreedyRobot& other_robot) {  
@@ -96,56 +92,66 @@ bool GreedyRobot::CheckLocations(int rX, int rY, int tX, int tY) {
 
 
 
-void GreedyRobot::CreatePath(int rX, int rY, const string& cur_path) {
-    //base case
-    if(CheckLocations(rX, rY, treasure_x_, treasure_y_)) 
-    {
-        //cout << "Reached treasure at (" << rX << ", " << rY << ")" << endl;
-        possible_routes_.push_back(cur_path);
+    void GreedyRobot::CreatePath(int rX, int rY, const string& cur_path) {
+    //cout << "Current Path: " << cur_path << endl;
+    //cout << "Robot Position: (" << rX << ", " << rY << ")" << endl;
+    //cout << "Treasure Position: (" << treasure_x_ << ", " << treasure_y_ << ")" << endl;
+        //base case
+        if(CheckLocations(rX, rY, treasure_x_,treasure_y_)) 
+        {
+            //cout << "Reached treasure at (" << rX << ", " << rY << ")" << endl;
+            if(cur_path == "") 
+            {
+                return;
+            }
+            else
+            {
+            possible_routes_.push_back(cur_path);
+            return;
+            }
+           
+        }
+        //Create NEWS functions and 
+        //if robot is below target move up
+        if(rY < treasure_y_ && maxN_ != 0) 
+        {
+            maxN_--;
+            //resets maximum moves for the other directions back to max distance
+            maxW_ = max_distance_;
+            maxE_ = max_distance_;
+            maxS_ = max_distance_;
+            CreatePath(rX, rY + 1, cur_path + "N");
+        }
+        if(rY > treasure_y_ && maxS_ != 0) 
+        {
+            maxS_--;
+            //resets maximum moves for the other directions back to max distance
+            maxW_ = max_distance_;
+            maxE_ = max_distance_;
+            maxN_ = max_distance_;
+            CreatePath(rX, rY - 1, cur_path + "S");
+        }
+        if(rX < treasure_x_ && maxE_ != 0) 
+        {
+            maxE_--;
+            //resets maximum moves for the other directions back to max distance
+            maxW_ = max_distance_;
+            maxN_ = max_distance_;
+            maxS_ = max_distance_;
+            CreatePath(rX + 1, rY, cur_path + "E");
+        }
+        if(rX > treasure_x_ && maxW_ != 0) 
+        {
+            maxW_--;
+            //resets maximum moves for the other directions back to max distance
+            maxE_ = max_distance_;
+            maxN_ = max_distance_;
+            maxS_ = max_distance_;
+            CreatePath(rX - 1, rY, cur_path + "W");
+        }
+        //? 
         return;
     }
-    //Create NEWS functions and 
-    //if robot is below target move up
-    if(rY < treasure_y_ && maxN_ != 0) 
-    {
-        maxN_--;
-        //resets maximum moves for the other directions back to max distance
-        maxW_ = max_distance_;
-        maxE_ = max_distance_;
-        maxS_ = max_distance_;
-        CreatePath(rX, rY + 1, cur_path + "N");
-    }
-     if(rY > treasure_y_ && maxS_ != 0) 
-    {
-        maxS_--;
-        //resets maximum moves for the other directions back to max distance
-        maxW_ = max_distance_;
-        maxE_ = max_distance_;
-        maxN_ = max_distance_;
-        CreatePath(rX, rY - 1, cur_path + "S");
-    }
-    //if robot is abovetarget move down
-    if(rX < treasure_x_ && maxE_ != 0) 
-    {
-        maxE_--;
-        //resets maximum moves for the other directions back to max distance
-        maxW_ = max_distance_;
-        maxN_ = max_distance_;
-        maxS_ = max_distance_;
-        CreatePath(rX + 1, rY, cur_path + "E");
-    }
-    if(rX > treasure_x_ && maxW_ != 0) 
-    {
-        maxW_--;
-        //resets maximum moves for the other directions back to max distance
-        maxE_ = max_distance_;
-        maxN_ = max_distance_;
-        maxS_ = max_distance_;
-        CreatePath(rX - 1, rY, cur_path + "W");
-    }
-    //?
-    return;
-}
 
 
 
